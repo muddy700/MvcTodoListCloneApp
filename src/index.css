@@ -1,13 +1,115 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+
+.container {
+  width: 40%;
+  height: auto;
+  background-color: gray;
+  margin-left: 25%;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.title {
+  text-align: center;
+  width: 100%;
+}
+
+.inputStyle {
+  width: 96%;
+  height: 50px;
+  font-weight: bold;
+  font-size: larger;
+  padding-left: 2%;
+  /* float: left; */
+
+}
+
+.buttonStyle {
+  width: 30%;
+  height: 20px;
+  font-weight: bold;
+  font-size: larger;
+  /* padding-left: 2%; */
+  background-color: blue;
+}
+
+.checkboxStyle {
+  width: 5%;
+  float: left;
+}
+
+.inputDiv {
+  width: 100%;
+  height: auto;
+}
+
+.taskDiv {
+  padding-top: 2%;
+  width: 100%;
+  height: 70px;
+  display: flex
+}
+
+.lableStyle {
+  font-size: larger;
+  font-weight: bold;
+  float: left;
+  width: 80%;
+  }
+
+.completedTask {
+  font-size: larger;
+  font-weight: bold;
+  float: left;
+  /* background-color: red; */
+  width: 80%;
+  text-decoration-line: line-through;
+  /* text-decoration-style: double; */
+  color: red;
+}
+ul {
+  list-style-type:none ;
+}
+
+.listDiv {
+  /* display: flex; */
+  /* text-align: left; */
+  height: 50px;
+  /* text-align: right; */
+
+}
+
+.deleteButton {
+  
+  height: 40%;
+  float: left;
+  width: 5%;
+  /* margin-right: 3%; */
+  font-size: medium;
+  font-weight: bolder;
+}
+
+.footerDiv{
+  display: flex;
+  padding-bottom: 2%;
+  padding-left: 2%;
+}
+
+.footerButton {
+  margin-left: 3%;
+}
+
+.typingMode {
+  text-align: center;
+  font-size: larger;
+  margin-left: 40%;
+  font-weight: bolder;
+  font-style: italic;
+
+}
+
+.typingMode2 {
+  text-align: center;
+  font-size: larger;
+  margin-left: 40%;
+  font-weight: bolder;
+  /* margin-top: 15%; */
+  
 }

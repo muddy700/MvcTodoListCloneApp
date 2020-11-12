@@ -1,0 +1,35 @@
+        // <div className="taskDiv">
+            /* <h1>Tasks Goes Here</h1> */
+            
+                 {/* <Input type="checkbox" Style="checkboxStyle" ></Input>  */}
+
+
+  if (isAdded.length === 0) {
+            
+            // this.setState({ selectedItems : [...selectedItems , value]})
+            const newItems = tasks.map((data) => {
+                if (data.id === value) {
+                    return { ...data, isSelected: true }
+
+                }
+                else return data
+            })
+            setTask(newItems)
+            setCompleted([...completed, value])
+            // console.log(completed)
+            // this.setState({ item: newItems, selectedItems: [...selectedItems, value] })
+        }
+        else {
+            const newItems2 = tasks.map((data) => {
+                if (data.id === value) {
+                    return { ...data, isSelected: false }
+                }
+                else return data
+            })
+            const newSelected = completed.filter((data) => data !== value)
+            // this.setState({ item: newItems2, selectedItems: newSelected })
+            setTask(newItems2)
+            setCompleted(newSelected)
+            console.log(completed)
+
+        }

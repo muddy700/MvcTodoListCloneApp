@@ -9,6 +9,7 @@ export const TaskList= (props) => {
 
     const {  tasks , callEditor , setCompleted , completed , setTask , setTotalTasks , viewMode} = props
     const [ display , setDisplay] = useState('none')
+    // const [selectedStyle , setSelectedStyle] = useState(true)
 
     // const [isChecked , setIsChecked ] = useState(false)
 
@@ -19,19 +20,39 @@ export const TaskList= (props) => {
     const manageCompleted = (value) => {
 
         const isAdded = completed.filter((data) => completed.includes(value))
+        let newTasks
 
         if (isAdded.length === 0) {
             
             setCompleted([...completed, value])
+            newTasks = tasks.map((data) => {
+                if(data.id === value){
+                    // setTask([...tasks , {status : true}])
+                    return { ...data, status: true}
+                }
+                else return data
+            })
+            // setSelectedStyle(true)
         }
         else {
           
             const newSelected = completed.filter((data) => data !== value)
             setCompleted(newSelected)
+
+            newTasks = tasks.map((data) => {
+                if (data.id === value) {
+                    // setTask([...tasks, { status: false }])
+                    return { ...data, status: false }
+                }
+                else return data
+
+            })
+            // setSelectedStyle(false)
         }
 
         // const remainingTasks = tasks.filter((data) => !completed.includes(data.id))
         // setTask(remainingTasks)
+        setTask(newTasks)
       
     }
 
@@ -69,8 +90,8 @@ const hide = () => {
         return (
                 <div className="listDiv" onMouseLeave={hide} onMouseEnter={show}>
                      {/* <InputCheckbox Style="checkboxStyle" whenClicked={} />  */}
-                    <input type="checkbox" onClick={() => manageCompleted(data.id)} className="checkboxStyle" />
-                    <Label key={data.id} value={data.name} whenClicked={() => callEditor(data.id)} /> 
+                    <input type="checkbox" onClick={() => manageCompleted(data.id)} checked={data.status} className="checkboxStyle" />
+                    <Label key={data.id} value={data.name} whenClicked={() => callEditor(data.id)} Style={data.status ? 'completedTask' : ''}/> 
                     <InputButton value="X" onOff={display} Style="delete" whenClicked={() => deleteSingleTask(data.id)} /> 
                 </div> 
                 )

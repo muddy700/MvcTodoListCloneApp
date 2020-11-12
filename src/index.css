@@ -113,3 +113,9 @@ ul {
   /* margin-top: 15%; */
   
 }
+
+.errorMode {
+  font-size: larger;
+  font-weight: bolder;
+color: darkred;
+}

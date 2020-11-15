@@ -1,18 +1,16 @@
-import React, { useState } from 'react'
-import { Heading } from './components/heading'
-import { Input } from './components/formInput'
+import { Heading , Label , Input} from './components/myComponents'
 import { TaskList } from './components/taskList'
 import { Footer } from './components/footer'
-import { Label } from './components/formLabel'
-import { InputButton } from './components/footerButton'
+import React, { useState } from 'react'
 import './index.css'
 
 var Id = 0
 
     export const App = () => {
-        const initialTasks = [
-                { id : 0 , name : 'jjjjj'} 
-        ]
+
+        // const initialTasks = [
+        //         { id : 0 , name : 'jjjjj'} 
+        // ]
 
         const [tasks , setTask] = useState([])
         const [activeTask , setActiveTask] = useState({ id : 0 , name : ''})
@@ -23,37 +21,47 @@ var Id = 0
         const [totalTasks , setTotalTasks] = useState('')
         const [errorMessage , setErrorMessage] = useState('')
         const [errorMode , setErrorMode] = useState(false)
-        const [allSelected , setAllSelected] = useState(false)
+        const [permissionToAdd , setPermissionToAdd ] = useState(false)
+        // const [allSelected , setAllSelected] = useState(false)
 
-
-
-       const handleChange = (value) => {
+        const handleChange = (value) => {
             setActiveTask({...activeTask , name : value})            
-        }
+            }
 
-              const deleteMultiple = () =>{
+        const deleteMultiple = () =>{
             const remainingTasks = tasks.filter((data) => !completed.includes(data.id))
             setCompleted([])
             setTask(remainingTasks)
 
         }
 
-        const addTask = (key) => {
-
-            if (activeTask.name.length <= 0) {
+        const validator = (key) => {
+            if (activeTask.name.length <= 0 && key !== 'Enter') {
                 setErrorMessage('Task Name Required')
                 setErrorMode(true)
                 setTypingMode(false)
-            }
-            else if (activeTask.name.length < 4) {
-                setErrorMessage('Enter Atleast 5 Characters')
+                setPermissionToAdd(false)
+            } else if (activeTask.name.length < 4 && key !== 'Enter') {
+                setErrorMessage('Enter Atleast 4 Characters')
+                setPermissionToAdd(false)
                 setErrorMode(true)
             }
-            else if (key !== 'Enter' ) {
+            else if (activeTask.name.length >= 4) {
                 setErrorMessage('')
+                setPermissionToAdd(true)
                 setErrorMode(false)
+
             }
-            else if(key === 'Enter' && !editingMode){
+
+        }
+        const addTask = (key) => {
+           if (activeTask.name.length <= 0) {
+               setErrorMessage('Task Name Required')
+               setErrorMode(true)
+               setTypingMode(false)
+            //    setPermissionToAdd(false)
+           }
+            else  if(key === 'Enter' && !editingMode && permissionToAdd ){
                 Id += 1
 
                 setTask([...tasks , {...activeTask , id : Id , status : false}])
@@ -62,9 +70,10 @@ var Id = 0
                 setTypingMode(true)
                 setErrorMode(false)
                 setErrorMessage('')
+                setPermissionToAdd(false)
 
             }
-            else  if(key === 'Enter' && editingMode){
+            else  if(key === 'Enter' && editingMode && permissionToAdd){
                 const newTaskList = tasks.map((data) => {
                     if(data.id === activeTask.id){
                     return {...data , name : activeTask.name}  
@@ -78,6 +87,7 @@ var Id = 0
                 setEditingMode(false)
                 setActiveTask({ id: '', name: '' })
                 setTypingMode(true)
+                setPermissionToAdd(false)
 
             }
             else if (key !== 'Enter') {
@@ -89,32 +99,31 @@ var Id = 0
  
         }
 
-        const selectAll = () => {
-            let newTasks
-            if(allSelected){
-                setAllSelected(false)
-                 newTasks = tasks.map((data) => {
-                    // setTask([...tasks , {status : true}])
-                    return { ...data, status: false }
-                }) 
-                setCompleted([])     
-            }
-            else {
-            setAllSelected(true)
-           newTasks = tasks.map((data) => {
-                    // setTask([...tasks , {status : true}])
-            //    setCompleted([...completed, data.id])
-                    return { ...data, status: true }
-                })
-                setCompleted(tasks.map((data) => data.status ?  data.id : '' ))
-            }
-            setTask(newTasks)
-        }
+        // const selectAll = () => {
+        //     let newTasks
+        //     if(allSelected){
+        //         setAllSelected(false)
+        //          newTasks = tasks.map((data) => {
+        //             // setTask([...tasks , {status : true}])
+        //             return { ...data, status: false }
+        //         }) 
+        //         setCompleted([])     
+        //     }
+        //     else {
+        //     setAllSelected(true)
+        //    newTasks = tasks.map((data) => {
+                  
+        //             return { ...data, status: true }
+        //         })
+        //         setCompleted(tasks.map((data) => data.status ?  data.id : '' ))
+        //     }
+        //     setTask(newTasks)
+        // }
+
         const callEditor = (value) => {
             const taskToEdit = tasks.find((data) => data.id === value)
             setActiveTask(taskToEdit)
             setEditingMode(true)
-            // console.log(taskToEdit)
         }
 
         let message
@@ -139,20 +148,16 @@ var Id = 0
 
         return (
             <div className="container">
-                <Heading title="Todo List"  typingMode={typingMode}/>
-                {/* <label className="typingMode" >  </label> */}
+                <Heading title="Todo List" Style="title" />
                 <Label Style="typingMode" hiddingMode={typingMode}  value="Typing..." />
-                
-                <Input type="text" value={activeTask.name} placeholder="Type A Task" Style="inputStyle" whenChanged={handleChange} whenKeyIsDown={addTask}/>
+                <Input type="text" keyIsUp={validator} value={activeTask.name} placeholder="Type A Task" Style="inputStyle" whenChanged={handleChange} whenKeyIsDown={addTask} />
                 <Label Style="errorMode" hiddingMode={!errorMode} value={errorMessage} />
                 <br /> 
-               <Label Style="typingMode2" value={message} />
-               {/* <InputButton /> */}
-                {/* <input type="button"  value={allSelected ? 'Dis-Select All' : 'Select All'} disabled={tasks.length <=0} onClick={selectAll} /> */}
-                <ul>  <TaskList setTotalTasks={setTotalTasks} viewMode={viewMode} tasks={tasks} callEditor={callEditor} setTask={setTask} completed={completed} setCompleted={setCompleted} />  </ul>
-
+                <Label Style="typingMode2" value={message} />
+                <ul> 
+                 <TaskList setTotalTasks={setTotalTasks} viewMode={viewMode} tasks={tasks} callEditor={callEditor} setTask={setTask} completed={completed} setCompleted={setCompleted} /> 
+                </ul>
                 <Footer completed={completed} deleteMultiple={deleteMultiple} tasks={tasks.length} viewMode={viewMode} setViewMode={setViewMode} setCompleted={setCompleted} />
-
             </div>
         )
 }

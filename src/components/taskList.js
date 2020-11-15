@@ -1,17 +1,11 @@
+import { Label , InputButton , InputCheckbox } from './myComponents'
 import React , { useState } from 'react'
 import '../index.css'
-import { Input} from './formInput'
-import { Label} from './formLabel'
-import { InputButton } from './footerButton'
-import { InputCheckbox } from './checkbox'
 
 export const TaskList= (props) => {
 
     const {  tasks , callEditor , setCompleted , completed , setTask , setTotalTasks , viewMode} = props
     const [ display , setDisplay] = useState('none')
-    // const [selectedStyle , setSelectedStyle] = useState(true)
-
-    // const [isChecked , setIsChecked ] = useState(false)
 
     const show = () => {
         setDisplay('block')
@@ -27,12 +21,10 @@ export const TaskList= (props) => {
             setCompleted([...completed, value])
             newTasks = tasks.map((data) => {
                 if(data.id === value){
-                    // setTask([...tasks , {status : true}])
                     return { ...data, status: true}
                 }
                 else return data
             })
-            // setSelectedStyle(true)
         }
         else {
           
@@ -41,19 +33,13 @@ export const TaskList= (props) => {
 
             newTasks = tasks.map((data) => {
                 if (data.id === value) {
-                    // setTask([...tasks, { status: false }])
                     return { ...data, status: false }
                 }
                 else return data
 
             })
-            // setSelectedStyle(false)
         }
-
-        // const remainingTasks = tasks.filter((data) => !completed.includes(data.id))
-        // setTask(remainingTasks)
         setTask(newTasks)
-      
     }
 
     const deleteSingleTask = (value) => {
@@ -65,14 +51,10 @@ export const TaskList= (props) => {
 
     }
 
-const hide = () => {
-    setDisplay('none')
+    const hide = () => {
+        setDisplay('none')
 }
 
-    // const completedTasks = tasks.filter((data) => completed.includes(data.id))
-    // const pendingTasks = tasks.filter((data) => !completed.includes(data.id))
-
-    // const arrayToMap = viewMode === 'all' ? tasks : pendingTasks
     let arrayToMap 
     if(viewMode === 'all'){
         arrayToMap = tasks.filter((data) => { return data} )
@@ -85,12 +67,12 @@ const hide = () => {
     }
  
         setTotalTasks(arrayToMap.length)
+
     const lists = arrayToMap.map((data) => {
 
         return (
                 <div className="listDiv" onMouseLeave={hide} onMouseEnter={show}>
-                     {/* <InputCheckbox Style="checkboxStyle" whenClicked={} />  */}
-                    <input type="checkbox" onClick={() => manageCompleted(data.id)} checked={data.status} className="checkboxStyle" />
+                    <InputCheckbox whenClicked={() => manageCompleted(data.id)} checkedStatus={data.status} Style="checkboxStyle" />
                     <Label key={data.id} value={data.name} whenClicked={() => callEditor(data.id)} Style={data.status ? 'completedTask' : ''}/> 
                     <InputButton value="X" onOff={display} Style="delete" whenClicked={() => deleteSingleTask(data.id)} /> 
                 </div> 

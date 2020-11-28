@@ -54,6 +54,7 @@ var Id = 0
             }
 
         }
+
         const addTask = (key) => {
            if (activeTask.name.length <= 0) {
                setErrorMessage('Task Name Required')
@@ -98,27 +99,6 @@ var Id = 0
             }
  
         }
-
-        // const selectAll = () => {
-        //     let newTasks
-        //     if(allSelected){
-        //         setAllSelected(false)
-        //          newTasks = tasks.map((data) => {
-        //             // setTask([...tasks , {status : true}])
-        //             return { ...data, status: false }
-        //         }) 
-        //         setCompleted([])     
-        //     }
-        //     else {
-        //     setAllSelected(true)
-        //    newTasks = tasks.map((data) => {
-                  
-        //             return { ...data, status: true }
-        //         })
-        //         setCompleted(tasks.map((data) => data.status ?  data.id : '' ))
-        //     }
-        //     setTask(newTasks)
-        // }
 
         const callEditor = (value) => {
             const taskToEdit = tasks.find((data) => data.id === value)
